@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -14,8 +14,11 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import Weather from '../screens/Weather';
+import ToDo from '../screens/ToDo';
+import Alarm from '../screens/Alarm';
+import CryptoPrices from '../screens/CryptoPrices';
+import Feeds from '../screens/Feeds';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -57,17 +60,18 @@ function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
+    // this provides our initial tab that is selected when we open our app
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Weather"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        name="Weather"
+        component={Weather}
+        options={({ navigation }: RootTabScreenProps<'Weather'>) => ({
+          title: 'Weather',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="weather-cloudy" size={24} color="white" />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
@@ -85,11 +89,35 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="ToDo"
+        component={ToDo}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'To Do List',
+          tabBarIcon: ({ color }) => <FontAwesome name="list-ul" size={24} color="white" />
+        }}
+      />
+       <BottomTab.Screen
+        name="Alarm"
+        component={Alarm}
+        options={{
+          title: 'Alarms',
+          tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={24} color="white" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Crypto"
+        component={CryptoPrices}
+        options={{
+          title: 'Crypto Prices',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="bitcoin" size={24} color="white" />,
+        }}
+      />
+       <BottomTab.Screen
+        name="Feeds"
+        component={Feeds}
+        options={{
+          title: 'Feeds',
+          tabBarIcon: ({ color }) => <FontAwesome name="reddit-alien" size={24} color="white" />
         }}
       />
     </BottomTab.Navigator>
